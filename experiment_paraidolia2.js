@@ -419,7 +419,6 @@ let end_debriefing = {
 
 jsPsych.run([
   enter_fullscreen,
-  informedConsent,
   intro_Task,
   trial_block1,
   trial_block2,
