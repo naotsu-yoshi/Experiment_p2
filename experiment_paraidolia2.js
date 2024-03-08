@@ -2,7 +2,7 @@
 const jsPsych = initJsPsych({
   on_finish: function () {
     // jsPsych.data.displayData();
-    jsPsych.data.get().localSave("csv", `${filename}`);
+    // jsPsych.data.get().localSave("csv", `${filename}`);
   },
 });
 
@@ -53,76 +53,6 @@ let enter_fullscreen = {
   },
   on_finish: function (data) {
     jsPsych.data.addProperties({ID:`${subject_id}`});
-  },
-};
-
-// 実験参加の同意画面
-let informedConsent = {
-  type: jsPsychSurveyHtmlForm,
-  html: `
-    <div style="text-align: center;margin-left: auto; margin-right: auto;max-width: 1280px;">
-    <br>
-    <h2>本調査の参加についての同意確認</h2>
-      <div style="text-align: left; display: inline-block; width: 100%;">
-        <ol>
-          <b><li>本調査の目的と内容</li></b>
-          この調査は図形の印象について調査するものです。<br>
-          参加者の方には図形に対して、特定の観点からの印象について評価してもらいます。<br>
-          なお，本調査はあなた個人の性格や能力を個別に評価することを目的とはしておりません。
-          <br>
-          <b><li>所要時間</li></b></li>
-          回答の所要時間は<b><u>10分程度</u></b>です。
-          <br>
-          <b><li>データと個人情報の取り扱いについて</li></b>
-          <ul>
-            <li>取得したデータや個人情報は、研究実施者により厳重に管理され、匿名で扱うことをお約束します。</li>
-            <li>これらは研究目的以外には使用しません。</li>
-          </ul>
-          <br>
-          <b><li>データの公開について</li></b>
-          <ul>
-            <li>実験結果は<u>国内外の学会や論文で発表</u>されることがあります。</li>
-            <li>データは統計的な処理を行われ、個人がデータから特定されることはありません。</li>
-            <li>そのため匿名化処理されたデータは、<i>オープンサイエンス*</i>の一環として公開されることがあります。</li>
-          </ul>
-          <br>
-          <b><li>参加と中止について</li></b>
-          本実験へのご参加はあなたの自由意思に基づいて決定して下さい。<br>
-          <u>実験参加への同意はいつでも取り消すことができ，それによる不利益はありません。</u>
-          参加に同意した後に参加途中で撤回したい場合，そのままブラウザを閉じていただけると同意撤回したものとみなします。<br>
-          参加途中で参加を撤回された場合は，そのデータをその後の研究で使用いたしません。
-          <br>
-          <b><li>謝礼について</li></b>
-          実験に協力していただいた方には薄謝をお支払い致します（120円分のPayPayポイント）。回答終了後に表示される<b>4桁のコード番号</b>をYahoo!クラウドソーシングのタスク画面に表示される入力欄に記入する必要があります。詳細は回答後、指示が表示されますのでそちらをご確認ください。
-          <br>
-      </div>
-      <hr>
-      <p><small>*<i>科学研究の成果物を公開し、透明性と再現性を高める取り組みのこと</i></small></p>
-      <small>本研究は日本学術振興会 特別研究員奨励費「環境に応じた認知機能のメタ的制御メカニズムの解明」（22J01676）の助成を受けて行われるものです。</small>
-      
-      <p align="right">
-        <small>実験責任者：立命館大学 OIC総合研究機構 専門研究員 吉村直人 </small>
-        <br>
-        <small>連絡先:22v01339[@]gst.ritsumei.ac.jp ([]は外してください)</small>
-      </p>
-
-      <div style="text-align: center;">
-        <input type="checkbox" id="checkbox1" name="checkbox" required>
-        <label for="checkbox1"><strong>
-          上記事項をよく読み，理解した上で実験参加に同意いただける方はチェックをお願いします。同意されない方はブラウザを閉じてください。
-          </strong></label>
-      </div>
-
-    </div>
-  `,
-  button_label: "進む",
-  on_load:() => {
-    // ボタン要素に対してスタイルを適用
-    document.getElementById('jspsych-survey-html-form-next').style.fontSize = 'clamp(12px, 2vw, 24px)';
-    document.getElementById('jspsych-survey-html-form-next').style.margin = "20px"; // 例: 下の余白を20pxに設定
-  },
-  data:()=>{
-    return {block: "informedConsent"}
   },
 };
 
@@ -437,32 +367,32 @@ let demographicInfo = {
 };
 
 // データをOSFに送るブロック(これより前までのデータだけが保存される)
-// let save_data = {
-//   type: jsPsychPipe,
-//   action: "save",
-//   experiment_id: "lA0VMHVMSpnu",
-//   filename: filename,
-//   data_string: ()=>jsPsych.data.get().csv(),
-//   on_load: function(trial){
-//     // spinner要素を選択
-//     const spinner = document.querySelector('.spinner');
+let save_data = {
+  type: jsPsychPipe,
+  action: "save",
+  experiment_id: "lA0VMHVMSpnu",
+  filename: filename,
+  data_string: ()=>jsPsych.data.get().csv(),
+  on_load: function(trial){
+    // spinner要素を選択
+    const spinner = document.querySelector('.spinner');
 
-//     // 新しい<p>要素を作成
-//     const messageElement = document.createElement('p');
-//     messageElement.textContent = '処理中です。しばらくお待ちください。';
+    // 新しい<p>要素を作成
+    const messageElement = document.createElement('p');
+    messageElement.textContent = '処理中です。しばらくお待ちください。';
 
-//     // spinnerの下端の位置を取得
-//     const spinnerRect = spinner.getBoundingClientRect();
-//     const spinnerBottom = spinnerRect.bottom;
+    // spinnerの下端の位置を取得
+    const spinnerRect = spinner.getBoundingClientRect();
+    const spinnerBottom = spinnerRect.bottom;
 
-//     // ビューポートの高さからspinnerの下端の位置を引いて、適切なmarginBottomを計算して適用
-//     const marginBottom = window.innerHeight - spinnerBottom - 20; // 20pxは少し余裕を持たせるため
-//     messageElement.style.marginBottom = `${marginBottom}px`;
+    // ビューポートの高さからspinnerの下端の位置を引いて、適切なmarginBottomを計算して適用
+    const marginBottom = window.innerHeight - spinnerBottom - 20; // 20pxは少し余裕を持たせるため
+    messageElement.style.marginBottom = `${marginBottom}px`;
 
-//     // spinnerの後に<p>要素を挿入
-//     spinner.parentNode.insertBefore(messageElement, spinner.nextSibling);
-//   }
-// };
+    // spinnerの後に<p>要素を挿入
+    spinner.parentNode.insertBefore(messageElement, spinner.nextSibling);
+  }
+};
 
 // デブリーフィング
 let end_debriefing = {
@@ -483,7 +413,7 @@ let end_debriefing = {
     stimulus: null,
   },
   on_finish: function (data) {
-    jsPsych.endExperiment("XXXX");
+    jsPsych.endExperiment("1104");
   },
 };
 
@@ -494,6 +424,6 @@ jsPsych.run([
   trial_block1,
   trial_block2,
   demographicInfo,
-  // save_data,
+  save_data,
   end_debriefing,
 ]);
