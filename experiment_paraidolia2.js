@@ -8,7 +8,7 @@ const jsPsych = initJsPsych({
 
 // ユニークなファイル名の生成
 const subject_id = jsPsych.randomization.randomID(10);
-const filename = `${subject_id}_check.csv`;
+const filename = `${subject_id}.csv`;
 
 // 本試行で使うデザインの配列
 let factors = {
