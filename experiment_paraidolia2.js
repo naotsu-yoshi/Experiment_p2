@@ -379,7 +379,7 @@ let save_data = {
 
     // 新しい<p>要素を作成
     const messageElement = document.createElement('p');
-    messageElement.textContent = '処理中です。しばらくお待ちください。';
+    messageElement.textContent = '処理中です。しばらくお待ちください。<br>利用環境によっては時間がかかる場合がありますので、終了するまでお待ち下さい。';
 
     // spinnerの下端の位置を取得
     const spinnerRect = spinner.getBoundingClientRect();
